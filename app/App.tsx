@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react';
 import {View, Text, Alert, Button} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Loading} from './Loading';
+import Geolocation from 'react-native-geolocation-service';
 
 const initialLoadingState = true;
 
