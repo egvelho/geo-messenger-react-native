@@ -1,12 +1,22 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image, ImageProps} from 'react-native';
 
 export type AvatarProps = {
   size: number;
   color: string;
   name: string;
+  source?: ImageProps['source'];
 };
 
-export function Avatar({size, color, name}: AvatarProps) {
+export function Avatar({size, color, name, source}: AvatarProps) {
+  const child = source ? (
+    <Image
+      source={source}
+      style={{width: size, height: size, borderRadius: size / 2}}
+    />
+  ) : (
+    <Text style={styles.initialsText}>{getInitials(name)}</Text>
+  );
+
   return (
     <View
       style={[
@@ -18,7 +28,7 @@ export function Avatar({size, color, name}: AvatarProps) {
           borderRadius: size / 2,
         },
       ]}>
-      <Text style={styles.initialsText}>{getInitials(name)}</Text>
+      {child}
     </View>
   );
 }
@@ -39,14 +49,15 @@ const styles = StyleSheet.create({
 });
 
 function getInitials(name: string) {
-  const splitedName = name.split(' ');
-  const firstName = splitedName[0];
-  const lastName = splitedName[splitedName.length - 1];
-  if (!firstName) {
-    return '??';
-  } else if (!lastName) {
-    return `${firstName[0]}${firstName[1]}`.toUpperCase();
-  }
+  const splittedName = name.trim().toUpperCase().split(' ');
+  const firstName = splittedName[0] ?? '';
+  const lastName = splittedName[splittedName.length - 1] ?? '';
 
-  return `${firstName[0]}${lastName[0]}`.toUpperCase();
+  if (firstName.length > 0 && lastName.length > 0) {
+    return firstName[0].concat(lastName[0]);
+  } else if (firstName.length > 0) {
+    return firstName[0].concat(firstName[firstName.length - 1]);
+  } else {
+    return '??';
+  }
 }

@@ -1,10 +1,11 @@
 import {useState, useEffect} from 'react';
-import {View, Text, Alert} from 'react-native';
+import {} from 'react-native';
 import {Loader} from '../components/Loader';
 import {AppContext, initialAppState} from './AppContext';
 import {requestPermission} from '../geolocation/requestPermission';
 import {getCoords} from '../geolocation/getCoords';
 import {ProfileScreen} from '../screens/profile/ProfileScreen';
+import {MessengerScreen} from '../screens/messenger/MessengerScreen';
 
 function delay(seconds: number) {
   return new Promise(resolve => {
@@ -37,7 +38,7 @@ export function App() {
 
   return (
     <AppContext.Provider value={{appState, setAppState}}>
-      <ProfileScreen />
+      <MessengerScreen />
     </AppContext.Provider>
   );
 }

@@ -11,6 +11,7 @@ export function ProfileScreen() {
     <View style={styles.profileWrapper}>
       <Avatar size={96} name={name} color={color} />
       <TextInput
+        placeholder="Nome completo"
         style={styles.nameInputText}
         value={name}
         onChangeText={name => {
@@ -19,6 +20,7 @@ export function ProfileScreen() {
       />
       <View style={styles.randomColorButton}>
         <Button
+          color={color}
           title="Escolher cor aleatória"
           onPress={() => {
             setColor(generateRandomColor());
@@ -38,11 +40,13 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   nameInputText: {
-    marginTop: 8,
-    backgroundColor: '#ccc',
+    marginTop: 16,
+    backgroundColor: '#f0f0f0',
     width: '100%',
+    borderRadius: 4,
   },
   randomColorButton: {
-    marginTop: 8,
+    width: '100%',
+    marginTop: 16,
   },
 });
