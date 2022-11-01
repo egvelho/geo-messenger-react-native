@@ -38,10 +38,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'column',
     padding: 16,
+    backgroundColor: '#eee',
+    height: '100%',
   },
   nameInputText: {
     marginTop: 16,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#fff',
     width: '100%',
     borderRadius: 4,
   },

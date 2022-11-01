@@ -1,16 +1,9 @@
 import {createContext} from 'react';
+import {UserState} from '../types';
 
 export type AppState = {
   isLoading: boolean;
-  user: {
-    id: string;
-    name: string;
-    color: string;
-  };
-  coords: {
-    latitude: number;
-    longitude: number;
-  };
+  user: UserState;
 };
 
 export const initialAppState: AppState = {
@@ -19,10 +12,10 @@ export const initialAppState: AppState = {
     id: '',
     name: '',
     color: '',
-  },
-  coords: {
-    latitude: 0,
-    longitude: 0,
+    coords: {
+      latitude: 0,
+      longitude: 0,
+    },
   },
 };
 

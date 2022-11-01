@@ -14,7 +14,9 @@ export function Avatar({size, color, name, source}: AvatarProps) {
       style={{width: size, height: size, borderRadius: size / 2}}
     />
   ) : (
-    <Text style={styles.initialsText}>{getInitials(name)}</Text>
+    <Text style={[styles.initialsText, {fontSize: size * 0.4}]}>
+      {getInitials(name)}
+    </Text>
   );
 
   return (
@@ -36,13 +38,12 @@ export function Avatar({size, color, name, source}: AvatarProps) {
 const styles = StyleSheet.create({
   avatarWrapper: {
     borderWidth: 5,
-    borderColor: '#ccc',
+    borderColor: '#fff',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
   initialsText: {
-    fontSize: 32,
     fontWeight: 'bold',
     color: '#fff',
   },
@@ -50,10 +51,10 @@ const styles = StyleSheet.create({
 
 function getInitials(name: string) {
   const splittedName = name.trim().toUpperCase().split(' ');
-  const firstName = splittedName[0] ?? '';
-  const lastName = splittedName[splittedName.length - 1] ?? '';
+  const firstName = splittedName[0] || '';
+  const lastName = splittedName[splittedName.length - 1] || '';
 
-  if (firstName.length > 0 && lastName.length > 0) {
+  if (splittedName.length > 1 && firstName.length > 0 && lastName.length > 0) {
     return firstName[0].concat(lastName[0]);
   } else if (firstName.length > 0) {
     return firstName[0].concat(firstName[firstName.length - 1]);

@@ -3,6 +3,6 @@
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     "skipLibCheck": true,
-    "types": ["styled-components-react-native"]
+    "types": ["node", "styled-components-react-native"]
   }
 }

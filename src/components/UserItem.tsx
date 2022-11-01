@@ -5,26 +5,34 @@ const UserItemWrapper = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 8px;
+  padding: 4px 8px;
 `;
 
 const AvatarWrapper = styled.View`
-  margin-right: 12px;
+  margin-right: 8px;
 `;
 
 const NameText = styled.Text`
-  font-size: 24px;
+  font-size: 18px;
 `;
 
 export type UserItemProps = {
   name: string;
+  color: string;
+  showSeparator?: boolean;
 };
 
-export function UserItem({name}: UserItemProps) {
+export function UserItem({name, color, showSeparator}: UserItemProps) {
   return (
-    <UserItemWrapper>
+    <UserItemWrapper
+      style={
+        showSeparator && {
+          borderTopColor: '#ccc',
+          borderTopWidth: 1,
+        }
+      }>
       <AvatarWrapper>
-        <Avatar color="#000" name="Eduardo Velho" size={96} />
+        <Avatar color={color} name={name} size={56} />
       </AvatarWrapper>
       <NameText>{name}</NameText>
     </UserItemWrapper>
