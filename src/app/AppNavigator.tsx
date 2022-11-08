@@ -9,7 +9,12 @@ const Tab = createBottomTabNavigator();
 
 export function AppNavigator() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      backBehavior="initialRoute"
+      initialRouteName={screens.home}
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Tab.Screen
         name={screens.messenger}
         component={MessengerScreen}

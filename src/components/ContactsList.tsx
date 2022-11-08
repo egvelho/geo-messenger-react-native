@@ -1,10 +1,16 @@
-import {Alert, TouchableOpacity} from 'react-native';
+import {TouchableOpacity, FlatList} from 'react-native';
 import {UserItem, UserItemProps} from './UserItem';
 import styled from 'styled-components/native';
 
-const ContactsListWrapper = styled.ScrollView`
+const ContactsListWrapper = styled.View`
   flex: 3;
   background-color: #fff;
+`;
+
+const Separator = styled.View`
+  height: 1px;
+  width: 100%;
+  background-color: #ccc;
 `;
 
 export type ContactsListProps = {
@@ -26,15 +32,18 @@ export function ContactsList({
           borderRightWidth: 1,
         }
       }>
-      {users.map((user, index) => (
-        <TouchableOpacity
-          key={index}
-          onPress={() => {
-            onItemPress(user);
-          }}>
-          <UserItem {...user} showSeparator={index !== 0} />
-        </TouchableOpacity>
-      ))}
+      <FlatList
+        data={users}
+        ItemSeparatorComponent={Separator}
+        renderItem={user => (
+          <TouchableOpacity
+            onPress={() => {
+              onItemPress(user.item);
+            }}>
+            <UserItem {...user.item} />
+          </TouchableOpacity>
+        )}
+      />
     </ContactsListWrapper>
   );
 }

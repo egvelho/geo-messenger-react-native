@@ -1,13 +1,12 @@
 import 'react-native-gesture-handler';
-import {useState, useEffect, useContext} from 'react';
-import {useColorScheme} from 'react-native';
+import {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {Loader} from '../components/Loader';
 import {AppContext, initialAppState, AppState} from './AppContext';
 import {requestPermission} from '../geolocation/requestPermission';
 import {getCoords} from '../geolocation/getCoords';
+import {watchGeolocation} from '../geolocation/watchGeolocation';
 import {AppNavigator} from './AppNavigator';
-import {ThemeProvider} from 'styled-components/native';
 
 async function init(): Promise<AppState> {
   const isPermissionGranted = await requestPermission();
@@ -21,23 +20,29 @@ async function init(): Promise<AppState> {
   return {
     ...initialAppState,
     user,
+    coords: coords ?? initialAppState.user.coords,
     isLoading,
   };
 }
-
-const darkTheme = {
-  bgColor: '#000',
-};
-
-const lightTheme = {
-  bgColor: '#fff',
-};
 
 export function App() {
   const [appState, setAppState] = useState(initialAppState);
 
   useEffect(() => {
     init().then(setAppState);
+    const {clearWatchId} = watchGeolocation({
+      onPositionChange(position) {
+        position.coords &&
+          setAppState({
+            ...appState,
+            coords: position.coords,
+          });
+      },
+    });
+
+    return () => {
+      clearWatchId();
+    };
   }, []);
 
   if (appState.isLoading) {

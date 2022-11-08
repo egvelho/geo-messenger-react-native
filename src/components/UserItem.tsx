@@ -19,18 +19,11 @@ const NameText = styled.Text`
 export type UserItemProps = {
   name: string;
   color: string;
-  showSeparator?: boolean;
 };
 
-export function UserItem({name, color, showSeparator}: UserItemProps) {
+export function UserItem({name, color}: UserItemProps) {
   return (
-    <UserItemWrapper
-      style={
-        showSeparator && {
-          borderTopColor: '#ccc',
-          borderTopWidth: 1,
-        }
-      }>
+    <UserItemWrapper>
       <AvatarWrapper>
         <Avatar color={color} name={name} size={56} />
       </AvatarWrapper>

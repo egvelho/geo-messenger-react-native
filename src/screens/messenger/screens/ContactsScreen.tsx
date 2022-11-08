@@ -1,9 +1,15 @@
+import {useWindowDimensions} from 'react-native';
+import styled from 'styled-components/native';
 import type {StackScreenProps} from '@react-navigation/stack';
 import type {ParamListBase} from '@react-navigation/native';
-import {useWindowDimensions, Alert} from 'react-native';
 import {generateRandomColor} from '../../../utils/generateRandomColor';
 import {ContactsList} from '../../../components/ContactsList';
+import {ChatView} from '../../../components/ChatView';
 import messengerScreens from '../messengerScreens.json';
+
+const ContactsScreenContainer = styled.View`
+  flex-direction: row;
+`;
 
 export function ContactsScreen({
   route,
@@ -16,13 +22,23 @@ export function ContactsScreen({
     name: `User ${index}`,
     color: generateRandomColor(),
   }));
+
+  const messages = Array.from({length: 50}, (_, index) => ({
+    isMyself: Math.random() > 0.5,
+    text: `Texto ${index}`,
+    color: generateRandomColor(),
+  }));
+
   return (
-    <ContactsList
-      users={users}
-      isLandscape={isLandscape}
-      onItemPress={user => {
-        navigation.navigate(messengerScreens.chat, user);
-      }}
-    />
+    <ContactsScreenContainer>
+      <ContactsList
+        users={users}
+        isLandscape={isLandscape}
+        onItemPress={user => {
+          navigation.navigate(messengerScreens.chat, user);
+        }}
+      />
+      {isLandscape && <ChatView messages={messages} />}
+    </ContactsScreenContainer>
   );
 }

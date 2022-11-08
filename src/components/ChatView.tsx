@@ -1,7 +1,8 @@
+import {FlatList} from 'react-native';
 import {MessageItem, MessageItemProps} from './MessageItem';
 import styled from 'styled-components/native';
 
-const ChatViewWrapper = styled.ScrollView`
+const MessageListWrapper = styled.View`
   flex: 5;
   background-color: #fff;
   padding-horizontal: 8px;
@@ -13,10 +14,11 @@ export type ChatViewProps = {
 
 export function ChatView({messages}: ChatViewProps) {
   return (
-    <ChatViewWrapper>
-      {messages.map((message, index) => (
-        <MessageItem key={index} {...message} />
-      ))}
-    </ChatViewWrapper>
+    <MessageListWrapper>
+      <FlatList
+        data={messages}
+        renderItem={message => <MessageItem {...message.item} />}
+      />
+    </MessageListWrapper>
   );
 }
