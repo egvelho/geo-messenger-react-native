@@ -1,5 +1,6 @@
 import {Avatar} from './Avatar';
 import styled from 'styled-components/native';
+import {UserState} from '../types';
 
 const UserItemWrapper = styled.View`
   display: flex;
@@ -16,10 +17,7 @@ const NameText = styled.Text`
   font-size: 18px;
 `;
 
-export type UserItemProps = {
-  name: string;
-  color: string;
-};
+export type UserItemProps = UserState;
 
 export function UserItem({name, color}: UserItemProps) {
   return (

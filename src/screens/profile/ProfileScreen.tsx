@@ -1,29 +1,41 @@
-import {useState} from 'react';
+import {useContext} from 'react';
+import {AppContext} from '../../app/AppContext';
 import {View, TextInput, Button, StyleSheet} from 'react-native';
 import {Avatar} from '../../components/Avatar';
 import {generateRandomColor} from '../../utils/generateRandomColor';
 
 export function ProfileScreen() {
-  const [name, setName] = useState('');
-  const [color, setColor] = useState('black');
+  const {appState, setAppState} = useContext(AppContext);
 
   return (
     <View style={styles.profileWrapper}>
-      <Avatar size={96} name={name} color={color} />
+      <Avatar size={96} name={appState.user.name} color={appState.user.color} />
       <TextInput
         placeholder="Nome completo"
         style={styles.nameInputText}
-        value={name}
+        value={appState.user.name}
         onChangeText={name => {
-          setName(name);
+          setAppState({
+            ...appState,
+            user: {
+              ...appState.user,
+              name,
+            },
+          });
         }}
       />
       <View style={styles.randomColorButton}>
         <Button
-          color={color}
+          color={appState.user.color}
           title="Escolher cor aleatória"
           onPress={() => {
-            setColor(generateRandomColor());
+            setAppState({
+              ...appState,
+              user: {
+                ...appState.user,
+                color: generateRandomColor(),
+              },
+            });
           }}
         />
       </View>

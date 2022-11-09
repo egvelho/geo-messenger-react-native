@@ -17,3 +17,8 @@ export type Message = {
   text: string;
   timestamp: number;
 };
+
+export type AppState = {
+  isLoading: boolean;
+  user: UserState;
+};

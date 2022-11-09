@@ -1,43 +1,60 @@
 import 'react-native-gesture-handler';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {Loader} from '../components/Loader';
-import {AppContext, initialAppState, AppState} from './AppContext';
+import {AppContext, initialAppState} from './AppContext';
 import {requestPermission} from '../geolocation/requestPermission';
 import {getCoords} from '../geolocation/getCoords';
 import {watchGeolocation} from '../geolocation/watchGeolocation';
+import {AppState, UsersPositions} from '../types';
 import {AppNavigator} from './AppNavigator';
+import {AppStorage} from './AppStorage';
+import {syncUserState} from '../messenger/syncUserState';
+import {UsersPositionsContext} from '../messenger/UsersPositionsContext';
 
 async function init(): Promise<AppState> {
   const isPermissionGranted = await requestPermission();
   const coords = await getCoords();
+  const storage = await AppStorage.getStorage();
   const user = {
-    ...initialAppState.user,
-    coords: coords ?? initialAppState.user.coords,
+    ...storage.user,
+    coords: coords ?? storage.user.coords,
   };
   const isLoading = !isPermissionGranted;
 
-  return {
-    ...initialAppState,
+  const appState = {
+    ...storage,
     user,
-    coords: coords ?? initialAppState.user.coords,
     isLoading,
   };
+
+  await AppStorage.setStorage(appState);
+
+  return appState;
 }
 
 export function App() {
   const [appState, setAppState] = useState(initialAppState);
+  const [usersPositions, setUsersPositions] = useState<UsersPositions>({});
+  const clearWatchIdRef = useRef(() => {});
+  const clearWatchId = clearWatchIdRef.current;
 
   useEffect(() => {
-    init().then(setAppState);
-    const {clearWatchId} = watchGeolocation({
-      onPositionChange(position) {
-        position.coords &&
+    init().then(appState => {
+      setAppState(appState);
+      const watchResults = watchGeolocation({
+        onPositionChange(coords) {
           setAppState({
             ...appState,
-            coords: position.coords,
+            user: {
+              ...appState.user,
+              coords,
+            },
           });
-      },
+        },
+      });
+
+      clearWatchIdRef.current = watchResults.clearWatchId;
     });
 
     return () => {
@@ -45,15 +62,23 @@ export function App() {
     };
   }, []);
 
+  useEffect(() => {
+    AppStorage.syncAppStorage(appState);
+    syncUserState(appState.user);
+  }, [appState]);
+
   if (appState.isLoading) {
     return <Loader />;
   }
 
   return (
     <NavigationContainer>
-      <AppContext.Provider value={{appState, setAppState}}>
-        <AppNavigator />
-      </AppContext.Provider>
+      <UsersPositionsContext.Provider
+        value={{usersPositions, setUsersPositions}}>
+        <AppContext.Provider value={{appState, setAppState}}>
+          <AppNavigator />
+        </AppContext.Provider>
+      </UsersPositionsContext.Provider>
     </NavigationContainer>
   );
 }

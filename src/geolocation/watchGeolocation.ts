@@ -1,21 +1,22 @@
 import Geolocation, {
   GeoWatchOptions,
-  GeoPosition,
+  GeoCoordinates,
 } from 'react-native-geolocation-service';
 
 const options: GeoWatchOptions = {
   enableHighAccuracy: true,
   interval: 2000,
   distanceFilter: 3,
+  showLocationDialog: false,
 };
 
 export function watchGeolocation({
   onPositionChange,
 }: {
-  onPositionChange: (position: GeoPosition) => Promise<void> | void;
+  onPositionChange: (position: GeoCoordinates) => Promise<void> | void;
 }) {
   const watchId = Geolocation.watchPosition(
-    onPositionChange,
+    position => position.coords && onPositionChange(position.coords),
     undefined,
     options,
   );

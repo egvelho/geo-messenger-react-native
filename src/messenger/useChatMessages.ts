@@ -18,13 +18,14 @@ export type UseChatMessageProps = {
 
 export function useChatMessages({myself, stranger}: UseChatMessageProps) {
   const messagesDbRef = useRef<DatabaseReference>();
+  const unsubscribeRef = useRef(() => {});
   const [messages, setMessages] = useState([] as Message[]);
 
   const sendMessage = (message: Message) =>
     messagesDbRef.current &&
     set(child(messagesDbRef.current, message.timestamp.toString()), message);
 
-  useEffect(() => {
+  function subscribe() {
     const path = [myself.id, stranger.id].sort().join('-');
     const db = getFirebaseDatabaseSingleton();
     const dbRef = ref(db, `messages/${path}`);
@@ -37,12 +38,22 @@ export function useChatMessages({myself, stranger}: UseChatMessageProps) {
         setMessages(nextMessages);
       }
     });
-
+    unsubscribeRef.current = unsubscribeOnValue;
     return unsubscribeOnValue;
+  }
+
+  useEffect(() => {
+    subscribe();
   }, []);
+
+  useEffect(() => {
+    unsubscribeRef.current();
+    subscribe();
+  }, [stranger]);
 
   return {
     messages,
     sendMessage,
+    unsubscribe: unsubscribeRef.current,
   };
 }

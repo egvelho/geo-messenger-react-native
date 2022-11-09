@@ -1,8 +1,9 @@
-import {useContext} from 'react';
-import {Text, StyleSheet} from 'react-native';
+import {useContext, useEffect} from 'react';
+import {StyleSheet} from 'react-native';
 import styled from 'styled-components/native';
 import MapView, {Marker} from 'react-native-maps';
 import {useListenUsersPositions} from '../../messenger/useListenUsersPositions';
+import {UsersPositionsContext} from '../../messenger/UsersPositionsContext';
 import {AppContext} from '../../app/AppContext';
 
 const delta = 0.003;
@@ -14,9 +15,22 @@ const MapContainer = styled.View`
 
 export function HomeScreen() {
   const {
-    appState: {coords},
+    appState: {user},
   } = useContext(AppContext);
-  const positions = useListenUsersPositions();
+
+  const {setUsersPositions} = useContext(UsersPositionsContext);
+
+  const positions = useListenUsersPositions({
+    user,
+    onChanged({coords, id}) {},
+    onAdded({coords, id}) {},
+    onRemoved({id}) {},
+  });
+
+  useEffect(() => {
+    setUsersPositions(positions);
+  }, [positions]);
+
   const positionsArray = Object.values(positions);
 
   return (
@@ -25,11 +39,11 @@ export function HomeScreen() {
         showsUserLocation
         style={styles.map}
         region={{
-          ...coords,
+          ...user.coords,
           latitudeDelta: delta,
           longitudeDelta: delta,
         }}>
-        <Marker coordinate={coords} />
+        <Marker coordinate={user.coords} />
         {positionsArray.map(position => (
           <Marker coordinate={position.coords} key={position.id} />
         ))}

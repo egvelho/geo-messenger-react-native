@@ -3,8 +3,8 @@ import {faker} from '@faker-js/faker';
 import firebaseConfig from './src/firebase/firebaseConfig.json' assert {type: 'json'};
 
 const databaseUrl = firebaseConfig.databaseURL;
-const userToReceiveMessage = '789-513-1665953209544';
-const numberOfUsers = 10;
+const userToReceiveMessage = '655-756-1668029911785';
+const numberOfUsers = 2;
 const messageInterval = 3000;
 const shouldDeleteMessages = true;
 const movementInterval = 1500;
