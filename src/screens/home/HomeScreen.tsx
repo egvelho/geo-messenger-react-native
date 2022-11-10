@@ -1,30 +1,52 @@
-import {useContext, useEffect} from 'react';
+import type {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import type {ParamListBase} from '@react-navigation/native';
+import {useContext, useEffect, useRef} from 'react';
 import {StyleSheet} from 'react-native';
 import styled from 'styled-components/native';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {Marker, MapMarker} from 'react-native-maps';
 import {useListenUsersPositions} from '../../messenger/useListenUsersPositions';
 import {UsersPositionsContext} from '../../messenger/UsersPositionsContext';
+import {Avatar} from '../../components/Avatar';
 import {AppContext} from '../../app/AppContext';
+import mapStyle from '../../mapStyle.json';
+import screens from '../../screens.json';
+import messengerScreens from '../messenger/messengerScreens.json';
 
 const delta = 0.003;
+const markerAnimationDuration = 1000;
+const markerSize = 42;
 
 const MapContainer = styled.View`
   width: 100%;
   height: 100%;
 `;
 
-export function HomeScreen() {
+export function HomeScreen({
+  route,
+  navigation,
+}: BottomTabScreenProps<ParamListBase>) {
   const {
     appState: {user},
   } = useContext(AppContext);
 
+  const markersRef = useRef({} as {[key: string]: MapMarker | undefined});
   const {setUsersPositions} = useContext(UsersPositionsContext);
 
   const positions = useListenUsersPositions({
     user,
-    onChanged({coords, id}) {},
-    onAdded({coords, id}) {},
-    onRemoved({id}) {},
+    onChanged({coords, id}) {
+      const marker = markersRef.current[id];
+      marker &&
+        marker.animateMarkerToCoordinate(coords, markerAnimationDuration);
+    },
+    onAdded({coords, id}) {
+      const marker = markersRef.current[id];
+      marker &&
+        marker.animateMarkerToCoordinate(coords, markerAnimationDuration);
+    },
+    onRemoved({id}) {
+      delete markersRef.current[id];
+    },
   });
 
   useEffect(() => {
@@ -37,16 +59,39 @@ export function HomeScreen() {
     <MapContainer>
       <MapView
         showsUserLocation
+        showsBuildings={false}
+        showsIndoors={false}
+        showsMyLocationButton={false}
+        showsCompass={false}
+        toolbarEnabled={false}
+        customMapStyle={mapStyle}
         style={styles.map}
         region={{
           ...user.coords,
           latitudeDelta: delta,
           longitudeDelta: delta,
         }}>
-        <Marker coordinate={user.coords} />
-        {positionsArray.map(position => (
-          <Marker coordinate={position.coords} key={position.id} />
-        ))}
+        {positionsArray.map(
+          user =>
+            user?.id &&
+            user?.coords && (
+              <Marker.Animated
+                coordinate={user.coords}
+                key={user.id}
+                ref={(marker: MapMarker) =>
+                  (markersRef.current[user.id as string] = marker)
+                }
+                onPress={() => {
+                  navigation.navigate(screens.messenger, {
+                    screen: messengerScreens.chat,
+                    params: user,
+                    initial: false,
+                  });
+                }}>
+                <Avatar name={user.name} color={user.color} size={markerSize} />
+              </Marker.Animated>
+            ),
+        )}
       </MapView>
     </MapContainer>
   );

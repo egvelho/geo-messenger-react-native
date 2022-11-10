@@ -29,7 +29,6 @@ export function ContactsScreen({
     myself,
     stranger,
   });
-  console.log(messages);
 
   const {usersPositions} = useContext(UsersPositionsContext);
   const users = Object.values(usersPositions).map(position => ({

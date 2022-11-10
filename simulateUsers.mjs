@@ -4,7 +4,7 @@ import firebaseConfig from './src/firebase/firebaseConfig.json' assert {type: 'j
 
 const databaseUrl = firebaseConfig.databaseURL;
 const userToReceiveMessage = '655-756-1668029911785';
-const numberOfUsers = 2;
+const numberOfUsers = 500;
 const messageInterval = 3000;
 const shouldDeleteMessages = true;
 const movementInterval = 1500;
