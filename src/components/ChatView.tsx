@@ -1,5 +1,6 @@
 import {useRef} from 'react';
-import {FlatList, StyleSheet, View, TextInput} from 'react-native';
+import {Box, Flex, Divider, Input} from 'native-base';
+import {FlatList} from 'react-native';
 import {MessageItem, MessageItemProps} from './MessageItem';
 
 export type ChatViewProps = {
@@ -18,8 +19,8 @@ export function ChatView({
   const flatListRef = useRef<any>(undefined);
 
   return (
-    <View style={styles.chatWrapper}>
-      <View style={styles.messagesWrapper}>
+    <Box bgColor="white" paddingX="2" height="full">
+      <Flex flex="1">
         <FlatList
           data={messages}
           renderItem={message => <MessageItem {...message.item} />}
@@ -29,41 +30,20 @@ export function ChatView({
           }
           onLayout={() => flatListRef.current?.scrollToEnd({animated: false})}
         />
-      </View>
-      <View style={styles.messageInputWrapper}>
-        <TextInput
-          style={styles.messageInput}
-          value={message}
-          placeholder="Digite sua mensagem"
-          onChangeText={message => onChangeMessage(message)}
-          onSubmitEditing={() => {
-            onSendMessage(message);
-            onChangeMessage('');
-          }}
-        />
-      </View>
-    </View>
+      </Flex>
+      <Divider />
+      <Input
+        fontSize="sm"
+        variant="unstyled"
+        paddingX="2"
+        value={message}
+        placeholder="Digite sua mensagem"
+        onChangeText={message => onChangeMessage(message)}
+        onSubmitEditing={() => {
+          onSendMessage(message);
+          onChangeMessage('');
+        }}
+      />
+    </Box>
   );
 }
-
-const styles = StyleSheet.create({
-  chatWrapper: {
-    display: 'flex',
-    flex: 5,
-    backgroundColor: '#fff',
-    paddingHorizontal: 8,
-    height: '100%',
-  },
-  messagesWrapper: {
-    flex: 1,
-  },
-  messageInputWrapper: {
-    backgroundColor: '#fff',
-    paddingHorizontal: 8,
-  },
-  messageInput: {
-    borderTopColor: '#ccc',
-    borderTopWidth: 1,
-    paddingVertical: 16,
-  },
-});

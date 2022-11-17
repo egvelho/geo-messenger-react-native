@@ -1,3 +1,4 @@
+import {Avatar as BaseAvatar} from 'native-base';
 import {View, Text, StyleSheet, Image, ImageProps} from 'react-native';
 
 export type AvatarProps = {
@@ -8,46 +9,18 @@ export type AvatarProps = {
 };
 
 export function Avatar({size, color, name, source}: AvatarProps) {
-  const child = source ? (
-    <Image
-      source={source}
-      style={{width: size, height: size, borderRadius: size / 2}}
-    />
-  ) : (
-    <Text style={[styles.initialsText, {fontSize: size * 0.4}]}>
-      {getInitials(name)}
-    </Text>
-  );
-
   return (
-    <View
-      style={[
-        styles.avatarWrapper,
-        {
-          width: size,
-          height: size,
-          backgroundColor: color,
-          borderRadius: size / 2,
-        },
-      ]}>
-      {child}
-    </View>
+    <BaseAvatar
+      bgColor={color}
+      size={`${size}px`}
+      source={source}
+      _text={{
+        fontSize: `${size * 0.4}px`,
+      }}>
+      {getInitials(name)}
+    </BaseAvatar>
   );
 }
-
-const styles = StyleSheet.create({
-  avatarWrapper: {
-    borderWidth: 5,
-    borderColor: '#fff',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  initialsText: {
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-});
 
 function getInitials(name: string) {
   const splittedName = name.trim().toUpperCase().split(' ');

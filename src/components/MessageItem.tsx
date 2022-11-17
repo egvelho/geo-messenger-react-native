@@ -1,5 +1,4 @@
-import {View} from 'react-native';
-import styled from 'styled-components/native';
+import {Box} from 'native-base';
 
 export type MessageItemProps = {
   text: string;
@@ -7,26 +6,20 @@ export type MessageItemProps = {
   isMyself?: boolean;
 };
 
-const MessageWrapper = styled.View`
-  padding: 8px;
-  margin: 8px;
-  border-radius: 4px;
-`;
-
-const MessageText = styled.Text`
-  font-size: 14px;
-  color: #fff;
-`;
-
 export function MessageItem({text, color, isMyself}: MessageItemProps) {
   return (
-    <MessageWrapper
-      style={{
-        backgroundColor: color,
-        marginRight: isMyself ? '20%' : undefined,
-        marginLeft: !isMyself ? '20%' : undefined,
+    <Box
+      borderRadius="4"
+      bgColor={color}
+      padding="2"
+      margin="2"
+      marginRight={isMyself ? '1/4' : undefined}
+      marginLeft={!isMyself ? '1/4' : undefined}
+      _text={{
+        color: 'white',
+        fontSize: 'sm',
       }}>
-      <MessageText>{text}</MessageText>
-    </MessageWrapper>
+      {text}
+    </Box>
   );
 }

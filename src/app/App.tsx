@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 import {useState, useEffect, useRef} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
+import {NativeBaseProvider, Box} from 'native-base';
 import {Loader} from '../components/Loader';
 import {AppContext, initialAppState} from './AppContext';
 import {requestPermission} from '../geolocation/requestPermission';
@@ -72,13 +73,15 @@ export function App() {
   }
 
   return (
-    <NavigationContainer>
-      <UsersPositionsContext.Provider
-        value={{usersPositions, setUsersPositions}}>
-        <AppContext.Provider value={{appState, setAppState}}>
-          <AppNavigator />
-        </AppContext.Provider>
-      </UsersPositionsContext.Provider>
-    </NavigationContainer>
+    <NativeBaseProvider>
+      <NavigationContainer>
+        <UsersPositionsContext.Provider
+          value={{usersPositions, setUsersPositions}}>
+          <AppContext.Provider value={{appState, setAppState}}>
+            <AppNavigator />
+          </AppContext.Provider>
+        </UsersPositionsContext.Provider>
+      </NavigationContainer>
+    </NativeBaseProvider>
   );
 }

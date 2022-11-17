@@ -1,49 +1,29 @@
-import {TouchableOpacity, FlatList} from 'react-native';
+import {Divider, Box, FlatList, Pressable} from 'native-base';
 import {UserItem, UserItemProps} from './UserItem';
-import styled from 'styled-components/native';
-
-const ContactsListWrapper = styled.View`
-  flex: 3;
-  background-color: #fff;
-`;
-
-const Separator = styled.View`
-  height: 1px;
-  width: 100%;
-  background-color: #ccc;
-`;
 
 export type ContactsListProps = {
-  isLandscape?: boolean;
   users: UserItemProps[];
   onItemPress: (user: UserItemProps) => Promise<void> | void;
 };
 
-export function ContactsList({
-  users,
-  onItemPress,
-  isLandscape = false,
-}: ContactsListProps) {
+export function ContactsList({users, onItemPress}: ContactsListProps) {
   return (
-    <ContactsListWrapper
-      style={
-        isLandscape && {
-          borderRightColor: '#ccc',
-          borderRightWidth: 1,
-        }
-      }>
+    <Box bgColor="white" height="full">
       <FlatList
         data={users}
-        ItemSeparatorComponent={Separator}
+        ItemSeparatorComponent={Divider}
         renderItem={user => (
-          <TouchableOpacity
+          <Pressable
+            _pressed={{
+              bgColor: 'primary.100',
+            }}
             onPress={() => {
               onItemPress(user.item);
             }}>
             <UserItem {...user.item} />
-          </TouchableOpacity>
+          </Pressable>
         )}
       />
-    </ContactsListWrapper>
+    </Box>
   );
 }
