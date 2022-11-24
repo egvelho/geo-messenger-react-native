@@ -1,10 +1,11 @@
 import {useContext} from 'react';
-import {Button, Column, Input} from 'native-base';
+import {Button, Column, Input, useColorMode} from 'native-base';
 import {AppContext} from '../../app/AppContext';
 import {Avatar} from '../../components/Avatar';
 import {generateRandomColor} from '../../utils/generateRandomColor';
 
 export function ProfileScreen() {
+  const {toggleColorMode} = useColorMode();
   const {appState, setAppState} = useContext(AppContext);
 
   return (
@@ -13,11 +14,9 @@ export function ProfileScreen() {
       justifyContent="center"
       space="4"
       padding="4"
-      bgColor="#eee"
       height="full">
       <Avatar size={96} name={appState.user.name} color={appState.user.color} />
       <Input
-        bgColor="white"
         placeholder="Nome completo"
         value={appState.user.name}
         onChangeText={name => {
@@ -43,6 +42,17 @@ export function ProfileScreen() {
           });
         }}>
         Escolher cor aleatória
+      </Button>
+      <Button
+        width="full"
+        onPress={() => {
+          setAppState({
+            ...appState,
+            isDarkTheme: !appState.isDarkTheme,
+          });
+          toggleColorMode();
+        }}>
+        Trocar tema global
       </Button>
     </Column>
   );

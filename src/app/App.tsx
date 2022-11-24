@@ -1,7 +1,11 @@
 import 'react-native-gesture-handler';
 import {useState, useEffect, useRef} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {NativeBaseProvider, Box} from 'native-base';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from '@react-navigation/native';
+import {NativeBaseProvider, extendTheme} from 'native-base';
 import {Loader} from '../components/Loader';
 import {AppContext, initialAppState} from './AppContext';
 import {requestPermission} from '../geolocation/requestPermission';
@@ -72,9 +76,28 @@ export function App() {
     return <Loader />;
   }
 
+  const baseNavigationTheme = appState.isDarkTheme ? DarkTheme : DefaultTheme;
+
+  const navigationTheme = {
+    ...baseNavigationTheme,
+    colors: {
+      ...baseNavigationTheme.colors,
+      primary: '#007AB8',
+    },
+  };
+
+  const nativeBaseTheme = extendTheme({
+    colors: {
+      primary: {},
+    },
+    config: {
+      initialColorMode: appState.isDarkTheme ? 'dark' : 'light',
+    },
+  });
+
   return (
-    <NativeBaseProvider>
-      <NavigationContainer>
+    <NativeBaseProvider theme={nativeBaseTheme}>
+      <NavigationContainer theme={navigationTheme}>
         <UsersPositionsContext.Provider
           value={{usersPositions, setUsersPositions}}>
           <AppContext.Provider value={{appState, setAppState}}>

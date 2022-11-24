@@ -8,7 +8,8 @@ import {useListenUsersPositions} from '../../messenger/useListenUsersPositions';
 import {UsersPositionsContext} from '../../messenger/UsersPositionsContext';
 import {Avatar} from '../../components/Avatar';
 import {AppContext} from '../../app/AppContext';
-import mapStyle from '../../mapStyle.json';
+import mapStyleDark from '../../mapStyleDark.json';
+import mapStyleLight from '../../mapStyleLight.json';
 import screens from '../../screens.json';
 import messengerScreens from '../messenger/messengerScreens.json';
 
@@ -25,15 +26,14 @@ export function HomeScreen({
   route,
   navigation,
 }: BottomTabScreenProps<ParamListBase>) {
-  const {
-    appState: {user},
-  } = useContext(AppContext);
+  const {appState} = useContext(AppContext);
 
+  const mapStyle = appState.isDarkTheme ? mapStyleDark : mapStyleLight;
   const markersRef = useRef({} as {[key: string]: MapMarker | undefined});
   const {setUsersPositions} = useContext(UsersPositionsContext);
 
   const positions = useListenUsersPositions({
-    user,
+    user: appState.user,
     onChanged({coords, id}) {
       const marker = markersRef.current[id];
       marker &&
@@ -67,7 +67,7 @@ export function HomeScreen({
         customMapStyle={mapStyle}
         style={styles.map}
         region={{
-          ...user.coords,
+          ...appState.user.coords,
           latitudeDelta: delta,
           longitudeDelta: delta,
         }}>

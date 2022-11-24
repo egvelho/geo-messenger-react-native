@@ -8,7 +8,7 @@ export type ContactsListProps = {
 
 export function ContactsList({users, onItemPress}: ContactsListProps) {
   return (
-    <Box bgColor="white" height="full">
+    <Box height="full">
       <FlatList
         data={users}
         ItemSeparatorComponent={Divider}

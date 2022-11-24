@@ -19,7 +19,7 @@ export function ChatView({
   const flatListRef = useRef<any>(undefined);
 
   return (
-    <Box bgColor="white" paddingX="2" height="full">
+    <Box paddingX="2" height="full">
       <Flex flex="1">
         <FlatList
           data={messages}
@@ -31,11 +31,11 @@ export function ChatView({
           onLayout={() => flatListRef.current?.scrollToEnd({animated: false})}
         />
       </Flex>
-      <Divider />
       <Input
         fontSize="sm"
-        variant="unstyled"
+        variant="rounded"
         paddingX="2"
+        marginBottom="2"
         value={message}
         placeholder="Digite sua mensagem"
         onChangeText={message => onChangeMessage(message)}

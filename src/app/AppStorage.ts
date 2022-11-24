@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Appearance} from 'react-native';
 import {faker} from '@faker-js/faker';
 import {AppState} from '../types';
 import {debounce} from '../utils/debouce';
@@ -27,6 +28,7 @@ export class AppStorage {
   static getInitialState(): AppState {
     return {
       isLoading: true,
+      isDarkTheme: Appearance.getColorScheme() === 'dark',
       user: {
         id: generateUserId(),
         name: faker.name.fullName(),

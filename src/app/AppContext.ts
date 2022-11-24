@@ -3,6 +3,7 @@ import type {AppState} from '../types';
 
 export const initialAppState: AppState = {
   isLoading: true,
+  isDarkTheme: false,
   user: {
     id: '',
     name: '',

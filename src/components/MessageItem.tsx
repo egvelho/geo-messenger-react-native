@@ -1,4 +1,4 @@
-import {Box} from 'native-base';
+import {Box, useContrastText} from 'native-base';
 
 export type MessageItemProps = {
   text: string;
@@ -7,6 +7,8 @@ export type MessageItemProps = {
 };
 
 export function MessageItem({text, color, isMyself}: MessageItemProps) {
+  const textColor = useContrastText(color);
+
   return (
     <Box
       borderRadius="4"
@@ -16,7 +18,7 @@ export function MessageItem({text, color, isMyself}: MessageItemProps) {
       marginRight={isMyself ? '1/4' : undefined}
       marginLeft={!isMyself ? '1/4' : undefined}
       _text={{
-        color: 'white',
+        color: textColor,
         fontSize: 'sm',
       }}>
       {text}

@@ -2,6 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {HomeScreen} from '../screens/home/HomeScreen';
 import {ProfileScreen} from '../screens/profile/ProfileScreen';
 import {MessengerScreen} from '../screens/messenger/MessengerScreen';
+import {FeedScreen} from '../screens/feed/FeedScreen';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import screens from '../screens.json';
 
@@ -39,6 +40,15 @@ export function AppNavigator() {
         options={{
           tabBarIcon({color, size}) {
             return <Icon name="person" size={size} color={color} />;
+          },
+        }}
+      />
+      <Tab.Screen
+        name={screens.feed}
+        component={FeedScreen}
+        options={{
+          tabBarIcon({color, size}) {
+            return <Icon name="rss-feed" size={size} color={color} />;
           },
         }}
       />

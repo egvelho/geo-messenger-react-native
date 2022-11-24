@@ -20,5 +20,6 @@ export type Message = {
 
 export type AppState = {
   isLoading: boolean;
+  isDarkTheme: boolean;
   user: UserState;
 };
