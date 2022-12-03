@@ -1,27 +1,15 @@
 import type {StackScreenProps} from '@react-navigation/stack';
 import type {ParamListBase} from '@react-navigation/native';
-import {useContext, useState} from 'react';
-import {ChatView} from '../../../components/ChatView';
-import {generateRandomColor} from '../../../utils/generateRandomColor';
-import {UserState} from '../../../types';
-import {AppContext} from '../../../app/AppContext';
-import {useChatMessages} from '../../../messenger/useChatMessages';
+import {useState} from 'react';
+import {useAppSelector} from '@src/app/appStore';
+import {ChatView} from '@src/messenger/ChatView';
+import {UserState} from '@src/types';
+import {useChatMessages} from '@src/user/useChatMessages';
 
-const messages = Array.from({length: 50}, (_, index) => ({
-  isMyself: Math.random() > 0.5,
-  text: `Texto ${index}`,
-  color: generateRandomColor(),
-}));
-
-export function ChatScreen({
-  route,
-  navigation,
-}: StackScreenProps<ParamListBase>) {
-  const {
-    appState: {user: myself},
-  } = useContext(AppContext);
+export function ChatScreen({route}: StackScreenProps<ParamListBase>) {
+  const myself = useAppSelector(state => state.user);
   const [message, setMessage] = useState('');
-  const stranger: UserState = route.params as any;
+  const stranger = route.params as UserState;
   const {messages, sendMessage} = useChatMessages({myself, stranger});
 
   return (

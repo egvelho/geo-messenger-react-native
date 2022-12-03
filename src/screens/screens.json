@@ -1,0 +1,10 @@
+{
+  "profile": "Profile",
+  "home": "Home",
+  "feed": "Feed",
+  "messenger": {
+    "messenger": "Messenger",
+    "chat": "Chat",
+    "contacts": "Contacts"
+  }
+}

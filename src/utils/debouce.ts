@@ -1,5 +1,5 @@
 export function debounce<T extends Function>(callback: T, timeout: number) {
-  let timeoutId = 0;
+  let timeoutId: any = 0;
   const callable = (...args: any) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback(...args), timeout);

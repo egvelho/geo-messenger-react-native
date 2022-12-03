@@ -1,9 +1,7 @@
-import {useContext} from 'react';
 import {FlatList, Alert} from 'react-native';
 import {Pressable} from 'native-base';
-import {AppContext} from '../../app/AppContext';
-import {FeedCard, FeedCardProps} from '../../components/FeedCard';
-import {generateRandomColor} from '../../utils/generateRandomColor';
+import {FeedCard, FeedCardProps} from '@src/components/FeedCard';
+import {generateRandomColor} from '@src/utils/generateRandomColor';
 
 const cardList: Array<FeedCardProps> = Array.from({length: 10}, (_, index) => ({
   color: generateRandomColor(),
@@ -18,8 +16,6 @@ const cardList: Array<FeedCardProps> = Array.from({length: 10}, (_, index) => ({
 }));
 
 export function FeedScreen() {
-  const {appState, setAppState} = useContext(AppContext);
-
   return (
     <FlatList
       data={cardList}

@@ -15,7 +15,7 @@ export type UseListenUsersPositionsArgs = {
   user?: UserState;
   onChanged?: (positions: UserState) => Promise<void> | void;
   onAdded?: (positions: UserState) => Promise<void> | void;
-  onRemoved?: (positions: UserState) => Promise<void> | void;
+  onRemoved?: (positions: {id: string}) => Promise<void> | void;
 };
 
 export function useListenUsersPositions({
@@ -58,7 +58,7 @@ export function useListenUsersPositions({
     const unsubscribeOnChildRemoved = onChildRemoved(dbRef, snapshot => {
       if (snapshot.key && snapshot.key !== user?.id) {
         delete positionsRef.current[snapshot.key];
-        onRemoved && (onRemoved as any)({id: snapshot.key});
+        onRemoved && onRemoved({id: snapshot.key});
       }
     });
 

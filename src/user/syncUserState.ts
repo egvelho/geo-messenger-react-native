@@ -1,10 +1,9 @@
 import {ref, set, child} from 'firebase/database';
-import {AppState} from '../types';
-import {getFirebaseDatabaseSingleton} from '../firebase/getFirebaseDatabaseSingleton';
-import {debounce} from '../utils/debouce';
-import {UserState} from '../types';
+import {getFirebaseDatabaseSingleton} from '@src/firebase/getFirebaseDatabaseSingleton';
+import {debounce} from '@src/utils/debouce';
+import {UserState} from '@src/types';
 
-const firebaseSyncInterval = 5000;
+const firebaseSyncInterval = 10000;
 
 export const syncUserState = debounce(async (user: UserState) => {
   if (

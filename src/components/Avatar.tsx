@@ -1,5 +1,5 @@
 import {Avatar as BaseAvatar} from 'native-base';
-import {View, Text, StyleSheet, Image, ImageProps} from 'react-native';
+import {ImageProps} from 'react-native';
 
 export type AvatarProps = {
   size: number;

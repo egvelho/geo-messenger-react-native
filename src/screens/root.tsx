@@ -1,14 +1,14 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {HomeScreen} from '../screens/home/HomeScreen';
-import {ProfileScreen} from '../screens/profile/ProfileScreen';
-import {MessengerScreen} from '../screens/messenger/MessengerScreen';
-import {FeedScreen} from '../screens/feed/FeedScreen';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import screens from '../screens.json';
+import {HomeScreen} from './home';
+import {ProfileScreen} from './profile';
+import {MessengerScreen} from './messenger/messenger';
+import {FeedScreen} from './feed';
+import screens from './screens.json';
 
 const Tab = createBottomTabNavigator();
 
-export function AppNavigator() {
+export function RootScreen() {
   return (
     <Tab.Navigator
       backBehavior="initialRoute"
@@ -17,7 +17,7 @@ export function AppNavigator() {
         headerShown: false,
       }}>
       <Tab.Screen
-        name={screens.messenger}
+        name={screens.messenger.messenger}
         component={MessengerScreen}
         options={{
           tabBarIcon({color, size}) {

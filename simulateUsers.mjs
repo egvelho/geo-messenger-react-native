@@ -3,11 +3,11 @@ import {faker} from '@faker-js/faker';
 import firebaseConfig from './src/firebase/firebaseConfig.json' assert {type: 'json'};
 
 const databaseUrl = firebaseConfig.databaseURL;
-const userToReceiveMessage = '778-913-1669069546661';
-const numberOfUsers = 5;
-const messageInterval = 5000;
+const userToReceiveMessage = 'eduardo-velho';
+const numberOfUsers = 2;
+const messageInterval = 3000;
 const shouldDeleteMessages = true;
-const movementInterval = 15000;
+const movementInterval = 3000;
 const movementIncrement = 0.01;
 const baseCoords = {
   latitude: -29.6795543,

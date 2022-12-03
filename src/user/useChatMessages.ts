@@ -8,8 +8,8 @@ import {
   orderByKey,
   DatabaseReference,
 } from 'firebase/database';
-import {getFirebaseDatabaseSingleton} from '../firebase/getFirebaseDatabaseSingleton';
-import type {UserState, Message} from '../types';
+import {getFirebaseDatabaseSingleton} from '@src/firebase/getFirebaseDatabaseSingleton';
+import type {UserState, Message} from '@src/types';
 
 export type UseChatMessageProps = {
   myself: UserState;

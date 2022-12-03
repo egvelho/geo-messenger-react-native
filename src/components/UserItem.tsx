@@ -1,6 +1,6 @@
-import {Avatar} from './Avatar';
 import {Row, Box, Text} from 'native-base';
-import {UserState} from '../types';
+import {Avatar} from '@src/components/Avatar';
+import {UserState} from '@src/types';
 
 export type UserItemProps = UserState;
 

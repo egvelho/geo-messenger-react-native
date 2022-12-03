@@ -1,24 +1,24 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {ChatScreen} from './screens/ChatScreen';
-import {ContactsScreen} from './screens/ContactsScreen';
-import messengerScreens from './messengerScreens.json';
-import {UserState} from '../../types';
+import {ChatScreen} from './chat';
+import {ContactsScreen} from './contacts';
+import {UserState} from '@src/types';
+import screens from '@src/screens/screens.json';
 
 const Stack = createNativeStackNavigator();
 
-export function MessengerNavigator() {
+export function MessengerScreen() {
   return (
     <Stack.Navigator
-      initialRouteName={messengerScreens.contacts}
+      initialRouteName={screens.messenger.contacts}
       screenOptions={{
         headerShown: false,
       }}>
       <Stack.Screen
-        name={messengerScreens.contacts}
+        name={screens.messenger.contacts}
         component={ContactsScreen}
       />
       <Stack.Screen
-        name={messengerScreens.chat}
+        name={screens.messenger.chat}
         component={ChatScreen}
         options={({route}) => ({
           headerShown: true,

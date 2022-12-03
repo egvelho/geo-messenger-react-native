@@ -8,6 +8,7 @@ const options: GeoWatchOptions = {
   interval: 2000,
   distanceFilter: 3,
   showLocationDialog: false,
+  forceRequestLocation: true,
 };
 
 export function watchGeolocation({
@@ -17,7 +18,7 @@ export function watchGeolocation({
 }) {
   const watchId = Geolocation.watchPosition(
     position => position.coords && onPositionChange(position.coords),
-    undefined,
+    console.log,
     options,
   );
 

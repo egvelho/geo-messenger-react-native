@@ -1,5 +1,5 @@
 import {Box, Image, Text, Divider, AspectRatio} from 'native-base';
-import {UserItem, UserItemProps} from './UserItem';
+import {UserItem, UserItemProps} from '@src/components/UserItem';
 
 export type FeedCardProps = {
   imageSrc: string;

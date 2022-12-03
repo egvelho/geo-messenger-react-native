@@ -1,5 +1,5 @@
 import {Divider, Box, FlatList, Pressable} from 'native-base';
-import {UserItem, UserItemProps} from './UserItem';
+import {UserItem, UserItemProps} from '@src/components/UserItem';
 
 export type ContactsListProps = {
   users: UserItemProps[];
