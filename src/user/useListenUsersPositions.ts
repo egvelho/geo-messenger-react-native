@@ -9,7 +9,9 @@ import {
 import {getFirebaseDatabaseSingleton} from '../firebase/getFirebaseDatabaseSingleton';
 import {UsersPositions, UserState} from '../types';
 
-const updateInterval = 5000;
+const updateInterval = 15000;
+const changeInterval = 10000;
+const minChangeInterval = 3000;
 
 export type UseListenUsersPositionsArgs = {
   user?: UserState;
@@ -25,6 +27,8 @@ export function useListenUsersPositions({
   onRemoved,
 }: UseListenUsersPositionsArgs = {}) {
   const positionsRef = useRef({} as UsersPositions);
+  const keysRef = useRef({} as {[key: string]: number});
+  const latestChangeTimeRef = useRef(0);
   const [positions, setPositions] = useState({} as UsersPositions);
 
   useEffect(() => {
@@ -40,8 +44,21 @@ export function useListenUsersPositions({
     });
 
     const unsubscribeOnChildChanged = onChildChanged(dbRef, snapshot => {
+      const currentTime = Date.now();
+
+      if (latestChangeTimeRef.current > currentTime - minChangeInterval) {
+        return;
+      }
+
+      latestChangeTimeRef.current = currentTime;
+
       if (snapshot.exists() && snapshot.key && snapshot.key !== user?.id) {
+        if (keysRef.current[snapshot.key] > currentTime - changeInterval) {
+          return;
+        }
+
         const nextPosition = snapshot.val();
+        keysRef.current[snapshot.key] = currentTime;
         positionsRef.current[snapshot.key] = nextPosition;
         onChanged && onChanged(nextPosition);
       }
@@ -51,6 +68,7 @@ export function useListenUsersPositions({
       if (snapshot.exists() && snapshot.key && snapshot.key !== user?.id) {
         const nextPosition = snapshot.val();
         positionsRef.current[snapshot.key] = nextPosition;
+        keysRef.current[snapshot.key] = Date.now();
         onAdded && onAdded(nextPosition);
       }
     });
@@ -58,6 +76,7 @@ export function useListenUsersPositions({
     const unsubscribeOnChildRemoved = onChildRemoved(dbRef, snapshot => {
       if (snapshot.key && snapshot.key !== user?.id) {
         delete positionsRef.current[snapshot.key];
+        delete keysRef.current[snapshot.key];
         onRemoved && onRemoved({id: snapshot.key});
       }
     });

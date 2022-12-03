@@ -2,9 +2,9 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Coords} from '@src/types';
 
 const userInitialState = {
-  id: 'eduardo-velho',
-  name: 'Eduardo Velho',
-  color: '#000',
+  id: '',
+  name: '',
+  color: '',
   coords: {
     latitude: 0,
     longitude: 0,

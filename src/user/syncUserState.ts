@@ -1,11 +1,17 @@
 import {ref, set, child} from 'firebase/database';
 import {getFirebaseDatabaseSingleton} from '@src/firebase/getFirebaseDatabaseSingleton';
-import {debounce} from '@src/utils/debouce';
 import {UserState} from '@src/types';
 
 const firebaseSyncInterval = 10000;
+let latestSyncTime = 0;
 
-export const syncUserState = debounce(async (user: UserState) => {
+export async function syncUserState(user: UserState) {
+  const syncTime = Date.now();
+  if (latestSyncTime > syncTime - firebaseSyncInterval) {
+    return;
+  }
+  latestSyncTime = syncTime;
+
   if (
     user.color.length === 0 ||
     user.id.length === 0 ||
@@ -22,4 +28,4 @@ export const syncUserState = debounce(async (user: UserState) => {
   await set(child(dbRef, 'color'), user.color);
   await set(child(dbRef, 'coords'), user.coords);
   await set(child(dbRef, 'id'), user.id);
-}, firebaseSyncInterval);
+}

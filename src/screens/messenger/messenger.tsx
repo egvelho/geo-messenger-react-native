@@ -16,6 +16,10 @@ export function MessengerScreen() {
       <Stack.Screen
         name={screens.messenger.contacts}
         component={ContactsScreen}
+        options={({route}) => ({
+          headerShown: true,
+          headerBackVisible: false,
+        })}
       />
       <Stack.Screen
         name={screens.messenger.chat}

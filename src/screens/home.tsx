@@ -6,7 +6,10 @@ import {UsersMap} from '@src/map/UsersMap';
 
 export function HomeScreen({navigation}: BottomTabScreenProps<ParamListBase>) {
   const isDarkMap = useAppSelector(state => state.app.isDarkTheme);
-  const user = useAppSelector(state => state.user);
+  const user = useAppSelector(
+    state => state.user,
+    () => true,
+  );
 
   return (
     <UsersMap

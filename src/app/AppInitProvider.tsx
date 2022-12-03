@@ -1,9 +1,11 @@
 import 'react-native-gesture-handler';
-import {useEffect} from 'react';
+import {useEffect, useMemo} from 'react';
 import {requestPermission} from '@src/geolocation/requestPermission';
 import {getCoords} from '@src/geolocation/getCoords';
 import {watchGeolocation} from '@src/geolocation/watchGeolocation';
 import {syncUserState} from '@src/user/syncUserState';
+import {generateRandomColor} from '@src/utils/generateRandomColor';
+import {generateUserId} from '@src/utils/generateUserId';
 import {AppLoader} from './AppLoader';
 import {
   useAppDispatch,
@@ -50,6 +52,14 @@ function AfterLoad({children}: AppInitProviderProps) {
   const user = useAppSelector(state => state.user);
 
   useEffect(() => {
+    if (user.id.length === 0) {
+      dispatch(userActions.setId({id: generateUserId()}));
+    }
+
+    if (user.color.length === 0) {
+      dispatch(userActions.setColor({color: generateRandomColor()}));
+    }
+
     const {clearWatchId} = watchGeolocation({
       onPositionChange(coords) {
         dispatch(userActions.setCoords({coords}));
@@ -63,5 +73,6 @@ function AfterLoad({children}: AppInitProviderProps) {
     syncUserState(user);
   }, [user]);
 
+  //const memoChildren = useMemo(() => <>{children}</>, [children]);
   return <>{children}</>;
 }

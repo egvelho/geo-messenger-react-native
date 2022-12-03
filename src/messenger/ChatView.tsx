@@ -1,5 +1,5 @@
 import {useRef} from 'react';
-import {Box, Flex, Divider, Input} from 'native-base';
+import {Box, Flex, Text, Input} from 'native-base';
 import {FlatList} from 'react-native';
 import {MessageItem, MessageItemProps} from './MessageItem';
 
@@ -8,6 +8,10 @@ export type ChatViewProps = {
   message: string;
   onChangeMessage: (message: string) => void;
   onSendMessage: (message: string) => Promise<void> | void;
+};
+
+const texts = {
+  emptyChatMessage: 'Nenhuma mensagem aqui.',
 };
 
 export function ChatView({
@@ -19,12 +23,17 @@ export function ChatView({
   const flatListRef = useRef<any>(undefined);
 
   return (
-    <Box paddingX="2" height="full">
+    <Box padding="2" height="full">
       <Flex flex="1">
         <FlatList
           data={messages}
           renderItem={message => <MessageItem {...message.item} />}
           ref={ref => (flatListRef.current = ref)}
+          ListEmptyComponent={
+            <Text fontSize="xl" textAlign="center">
+              {texts.emptyChatMessage}
+            </Text>
+          }
           onContentSizeChange={() =>
             flatListRef.current?.scrollToEnd({animated: false})
           }
