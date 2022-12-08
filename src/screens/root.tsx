@@ -3,7 +3,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {HomeScreen} from './home';
 import {ProfileScreen} from './profile';
 import {MessengerScreen} from './messenger/messenger';
-import {FeedScreen} from './feed';
+import {FeedScreen} from './feed/feed';
 import screens from './screens.json';
 
 const Tab = createBottomTabNavigator();
@@ -44,7 +44,7 @@ export function RootScreen() {
         }}
       />
       <Tab.Screen
-        name={screens.feed}
+        name={screens.feed.feed}
         component={FeedScreen}
         options={{
           tabBarIcon({color, size}) {

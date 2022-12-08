@@ -8,11 +8,6 @@ import screens from '@src/screens/screens.json';
 export function ContactsScreen({navigation}: StackScreenProps<ParamListBase>) {
   const usersPositions = useAppSelector(
     state => state.usersPositions.positions,
-    (positions, nextPositions) => {
-      const positionsLength = Object.keys(positions).length;
-      const nextPositionsLength = Object.keys(nextPositions).length;
-      return positionsLength === nextPositionsLength;
-    },
   );
 
   const users = Object.values(usersPositions);

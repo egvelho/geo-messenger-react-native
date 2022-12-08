@@ -1,10 +1,14 @@
 {
   "profile": "Perfil",
   "home": "Mapa",
-  "feed": "Publicações",
   "messenger": {
     "messenger": "Mensagens",
     "chat": "Conversa",
     "contacts": "Contatos"
+  },
+  "feed": {
+    "feed": "Publicações",
+    "add": "Criar publicação",
+    "list": "Últimas publicações"
   }
 }

@@ -9,7 +9,6 @@ import {useChatMessages} from '@src/user/useChatMessages';
 export function ChatScreen({route}: StackScreenProps<ParamListBase>) {
   const myself = useAppSelector(
     state => state.user,
-    () => true,
   );
   const [message, setMessage] = useState('');
   const stranger = route.params as UserState;

@@ -1,10 +1,11 @@
 import 'react-native-gesture-handler';
-import {useEffect, useMemo} from 'react';
+import {useEffect} from 'react';
 import {requestPermission} from '@src/geolocation/requestPermission';
 import {getCoords} from '@src/geolocation/getCoords';
 import {watchGeolocation} from '@src/geolocation/watchGeolocation';
 import {syncUserState} from '@src/user/syncUserState';
 import {generateRandomColor} from '@src/utils/generateRandomColor';
+import {delay} from '@src/utils/delay';
 import {generateUserId} from '@src/utils/generateUserId';
 import {AppLoader} from './AppLoader';
 import {
@@ -25,6 +26,7 @@ async function init() {
     if (coords !== undefined) {
       return {coords};
     }
+    await delay(1000);
   }
 }
 
@@ -73,6 +75,5 @@ function AfterLoad({children}: AppInitProviderProps) {
     syncUserState(user);
   }, [user]);
 
-  //const memoChildren = useMemo(() => <>{children}</>, [children]);
   return <>{children}</>;
 }
