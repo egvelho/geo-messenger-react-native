@@ -6,7 +6,7 @@ export type UserItemProps = UserState;
 
 export function UserItem({name, color}: UserItemProps) {
   return (
-    <Row paddingY="2" paddingX="2" alignItems="center">
+    <Row paddingY="3" paddingX="3" alignItems="center">
       <Box marginRight="2">
         <Avatar color={color} name={name} size={42} />
       </Box>

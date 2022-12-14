@@ -25,7 +25,7 @@ export function AppLayoutProvider({children}: AppLayoutProviderProps) {
     ...baseNavigationTheme,
     colors: {
       ...baseNavigationTheme.colors,
-      primary: nativeBaseTheme.colors.primary[600],
+      primary: nativeBaseTheme.colors.primary[800],
     },
   };
 
