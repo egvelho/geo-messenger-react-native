@@ -7,6 +7,7 @@ export const queryGetFeedPage = gql`
       pagination: {pageSize: $pageSize, page: $page}
     ) {
       data {
+        id
         attributes {
           name
           color

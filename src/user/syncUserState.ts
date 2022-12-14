@@ -28,4 +28,8 @@ export async function syncUserState(user: UserState) {
   await set(child(dbRef, 'color'), user.color);
   await set(child(dbRef, 'coords'), user.coords);
   await set(child(dbRef, 'id'), user.id);
+
+  if (user.token !== undefined) {
+    await set(child(dbRef, 'token'), user.token);
+  }
 }

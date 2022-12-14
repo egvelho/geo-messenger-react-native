@@ -3,6 +3,7 @@ export type UserState = {
   name: string;
   color: string;
   coords: Coords;
+  token?: string;
 };
 
 export type Coords = {

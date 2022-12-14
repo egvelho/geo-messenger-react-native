@@ -5,6 +5,7 @@ const userInitialState = {
   id: '',
   name: '',
   color: '',
+  token: undefined as string | undefined,
   coords: {
     latitude: 0,
     longitude: 0,
@@ -26,6 +27,9 @@ export const userSlice = createSlice({
     },
     setCoords(state, action: PayloadAction<{coords: Coords}>) {
       state.coords = action.payload.coords;
+    },
+    setToken(state, action: PayloadAction<{token: string}>) {
+      state.token = action.payload.token;
     },
   },
 });

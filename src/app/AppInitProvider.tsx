@@ -15,6 +15,8 @@ import {
   userActions,
 } from './appStore';
 
+import messaging from '@react-native-firebase/messaging';
+
 export type AppInitProviderProps = {
   children: React.ReactNode;
 };
@@ -24,7 +26,8 @@ async function init() {
   while (true) {
     const coords = await getCoords();
     if (coords !== undefined) {
-      return {coords};
+      const token = await messaging().getToken();
+      return {coords, token};
     }
     await delay(1000);
   }
@@ -36,7 +39,8 @@ export function AppInitProvider({children}: AppInitProviderProps) {
   const isDarkTheme = useAppSelector(state => state.app.isDarkTheme);
 
   useEffect(() => {
-    init().then(({coords}) => {
+    init().then(({coords, token}) => {
+      dispatch(userActions.setToken({token}));
       dispatch(userActions.setCoords({coords}));
       dispatch(appActions.setLoading({isLoading: false}));
     });

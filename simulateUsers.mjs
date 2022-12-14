@@ -1,13 +1,14 @@
 import axios from 'axios';
 import {faker} from '@faker-js/faker';
 import firebaseConfig from './src/firebase/firebaseConfig.json' assert {type: 'json'};
+import {notifyUsers} from './notifyUsers.mjs';
 
 const databaseUrl = firebaseConfig.databaseURL;
-const userToReceiveMessage = '662-28-1670089680221';
-const numberOfUsers = 20;
-const messageInterval = 10000;
+const userToReceiveMessage = '30-289-1670888790061';
+const numberOfUsers = 2;
+const messageInterval = 15000;
 const shouldDeleteMessages = true;
-const movementInterval = 5000;
+const movementInterval = 10000;
 const movementIncrement = 0.01;
 const baseCoords = {
   latitude: -29.6795543,
@@ -65,10 +66,20 @@ function delay(timeout) {
   return new Promise(resolve => setTimeout(() => resolve(undefined), timeout));
 }
 
-function sendMessage(user) {
+async function sendMessage(user) {
   const message = generateMessage(user);
   const chatPath = [userToReceiveMessage, user.id].sort().join('-');
-  return axios.put(
+  await notifyUsers({
+    title: user.name,
+    body:
+      message.text.length > 140
+        ? message.text.slice(140).concat('...')
+        : message.text,
+    data: {
+      json: JSON.stringify(user),
+    },
+  });
+  return await axios.put(
     `${databaseUrl}/messages/${chatPath}/${message.timestamp}/.json`,
     message,
   );

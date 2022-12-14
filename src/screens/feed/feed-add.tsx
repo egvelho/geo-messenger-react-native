@@ -15,7 +15,7 @@ import {
   useToast,
 } from 'native-base';
 import {Avatar} from '@src/components/Avatar';
-import {useAppSelector} from '@src/app/appStore';
+import {useAppSelector, appStore} from '@src/app/appStore';
 import {useMutation} from '@apollo/client';
 import {mutationCreatePost} from '@src/feed/queries/mutationCreatePost';
 import screens from '@src/screens/screens.json';

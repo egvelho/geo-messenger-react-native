@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "347263163607",
+    "firebase_url": "https://geomessenger-365217-default-rtdb.firebaseio.com",
+    "project_id": "geomessenger-365217",
+    "storage_bucket": "geomessenger-365217.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347263163607:android:43d9c4b13425abcae66492",
+        "android_client_info": {
+          "package_name": "com.geomessenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347263163607-rk4bqrtvvlng77sco0q5til9ndhgp2m7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMyAW-UD5d2ZNrZytFuN7dMBld7nfdCvg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347263163607-rk4bqrtvvlng77sco0q5til9ndhgp2m7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

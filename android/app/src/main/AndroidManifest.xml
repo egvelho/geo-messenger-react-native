@@ -27,5 +27,9 @@
       <meta-data
         android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyD_7L4qTI6JuSIFu62zAweuLpe5CKoYoww" />
+      <meta-data
+        android:name="com.google.firebase.messaging.default_notification_icon"
+        android:resource="@drawable/ic_notification"
+      />
     </application>
 </manifest>
