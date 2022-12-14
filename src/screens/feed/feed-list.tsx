@@ -81,7 +81,7 @@ export function FeedListScreen({navigation}: StackScreenProps<ParamListBase>) {
       )}
       {loading && (
         <Center marginBottom="4">
-          <Spinner size="lg" color="white" />
+          <Spinner size="lg" color="primary.600" />
         </Center>
       )}
       <Fab
