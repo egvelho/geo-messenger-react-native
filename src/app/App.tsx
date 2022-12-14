@@ -1,3 +1,4 @@
+import codePush from 'react-native-code-push';
 import {AppLayoutProvider} from './AppLayoutProvider';
 import {AppInitProvider} from './AppInitProvider';
 import {RootScreen} from '@src/screens/root';
@@ -10,7 +11,7 @@ import {
   AppStorePersistGate,
 } from './appStore';
 
-export function App() {
+function AppContainer() {
   return (
     <AppStoreProvider store={appStore}>
       <AppStorePersistGate persistor={appPersistor}>
@@ -26,3 +27,5 @@ export function App() {
     </AppStoreProvider>
   );
 }
+
+export const App = codePush(AppContainer);

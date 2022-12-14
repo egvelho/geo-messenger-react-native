@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GeoMessenger</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">363B0HUDzFJ5vD6bsrWk3j1vEq-CRvpiV6-YR</string>
 </resources>
