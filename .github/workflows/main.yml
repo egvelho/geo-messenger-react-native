@@ -1,0 +1,46 @@
+name: Deploy Code Push
+
+on: workflow_dispatch
+jobs:
+  deploy-code-push:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.COMMIT_KEY }}
+          
+      - name: Get NPM Version
+        uses: nyaa8/package-version@v1
+        
+      - name: Install app dependencies
+        uses: bahmutov/npm-install@v1
+                
+      - name: Generate .env
+        run: |-
+          echo CODE_PUSH_DEPLOYMENT_KEY_ANDROID=${{ secrets.CODE_PUSH_DEPLOYMENT_KEY_ANDROID }} >> .env
+          
+      - name: Parse version name
+        run: |-
+          echo "PARSED_VERSION_NAME=$(cut -d'-' -f1 <<< ${{ env.PACKAGE_VERSION }})" >> $GITHUB_ENV
+          
+      - name: Bump version Android
+        uses: chkfung/android-version-actions@v1.1
+        with:
+          gradlePath: ./android/app/build.gradle
+          versionName: ${{ env.PARSED_VERSION_NAME}}
+          versionCode: 0
+          
+      - name: Install AppCenter CLI
+        run: npm install -g appcenter-cli
+        
+      - name: Deploy to CodePush Android
+        run: appcenter codepush release-react -a most_random_user_ever/GeoMessenger -d Production
+        env:
+          APPCENTER_ACCESS_TOKEN: ${{ secrets.APPCENTER_ACCESS_TOKEN_ANDROID }}
+          
+      - name: Create FIX tag
+        run: git tag v${{ env.PACKAGE_VERSION }}
+        
+      - name: Push new FIX tag to remote
+        run: git push origin v${{ env.PACKAGE_VERSION }}
