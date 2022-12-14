@@ -6,9 +6,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          ssh-key: ${{ secrets.COMMIT_KEY }}
+        uses: actions/checkout@v3
           
       - name: Get NPM Version
         uses: nyaa8/package-version@v1
