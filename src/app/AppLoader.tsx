@@ -10,10 +10,10 @@ export function AppLoader({dark = false}: AppLoaderProps) {
       style={[
         styles.loaderWrapper,
         {
-          backgroundColor: dark ? '#ff0000' : '#00ff00',
+          backgroundColor: dark ? '#101010' : '#f0f0f0',
         },
       ]}>
-      <ActivityIndicator size={64} color={dark ? '#00ff00' : '#ff0000'} />
+      <ActivityIndicator size={64} color={dark ? '#f0f0f0' : '#101010'} />
     </View>
   );
 }
