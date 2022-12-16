@@ -1,2 +1,2 @@
-# geo-messenger
-Geo messenge in React Native!
+# geo-messenger-react-native
+Geo messenger written in React Native!
